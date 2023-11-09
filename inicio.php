@@ -39,7 +39,10 @@
 
         echo "<hr>";
 
-        $query = mysqli_query($conexao, "SELECT * FROM aluno where Aluno_Cidade = 'Registro';");
+        $query = mysqli_query($conexao, "SELECT * FROM aluno");
+
+        
+
 
         while($exibe = mysqli_fetch_array($query)){
             if($exibe[4] == "F"){
@@ -48,9 +51,21 @@
             }
 
             else{
-                echo "O aluno ". $exibe[1]. " portador do RM 1, RG ". $exibe[2]. " e residente na cidade de ". $exibe[3]. ", está cursando a disciplina de PW2 do TDS";
+                echo "O aluno ". $exibe[1]. " portador do RM 1, RG ". $exibe[2]. " e residente na cidade de ". $exibe[3]. ", está cursando a disciplina de PW2 do TDS <br>";
 
             }
+
+            
+        } 
+
+        echo "<br><hr>";
+
+        $query = mysqli_query($conexao, "SELECT * FROM matricula INNER JOIN aluno ON Matricula_Aluno_Codigo = Aluno_Codigo INNER JOIN curso ON Matricula_Curso_Codigo = Curso_Codigo INNER JOIN disciplina ON Curso_Codigo = Disciplina_Codigo");
+        
+        while($exibe = mysqli_fetch_array($query)){
+            echo "<img src='imgs/".$exibe[8]."' width='150px'>";
+            $vogal = ($exibe[7]=="F")?"a":"o";
+            echo strtoupper($vogal) . " alun$vogal " . $exibe[4] . ", portando o RM " . $exibe[0] . ", RG " . $exibe[5] . " e residente na cidade de " . $exibe[6] . " está cursando a disciplina de " . $exibe[12] . " do " . $exibe[10] . " <br>";
 
         } 
 
@@ -62,8 +77,7 @@
         echo "A aluna ". $exibe[0]. " portadorado do RM 1, RG ". $exibe[1]. " e residente na cidade de ". $exibe[2]. ", está cursando a disciplina de PW2 do TDS";
        */ 
 
-
-        
+       echo "<hr>";
 
     ?>
 

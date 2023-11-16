@@ -60,23 +60,94 @@
 
         echo "<br><hr>";
 
-        $query = mysqli_query($conexao, "SELECT * FROM matricula INNER JOIN aluno ON Matricula_Aluno_Codigo = Aluno_Codigo INNER JOIN curso ON Matricula_Curso_Codigo = Curso_Codigo INNER JOIN disciplina ON Curso_Codigo = Disciplina_Codigo");
+        $query = mysqli_query($conexao, "SELECT * FROM matricula 
+        INNER JOIN aluno 
+        ON Matricula_Aluno_Codigo = Aluno_Codigo 
+        INNER JOIN curso 
+        ON Matricula_Curso_Codigo = Curso_Codigo 
+        INNER JOIN disciplina 
+        ON Curso_Codigo = Disciplina_Codigo");
         
         while($exibe = mysqli_fetch_array($query)){
+
             echo "<img src='imgs/".$exibe[8]."' width='150px'>";
             $vogal = ($exibe[7]=="F")?"a":"o";
-            echo strtoupper($vogal) . " alun$vogal " . $exibe[4] . ", portando o RM " . $exibe[0] . ", RG " . $exibe[5] . " e residente na cidade de " . $exibe[6] . " está cursando a disciplina de " . $exibe[12] . " do " . $exibe[10] . " <br>";
+            echo strtoupper($vogal) . " alun$vogal <b>" . $exibe[4] . "</b>, portando o RM <b>" . $exibe[0] . "</b>, RG <b>" . $exibe[5] . 
+            "</b> e residente na cidade de <b>" . $exibe[6] . "</b> está cursando a disciplina de <b>" . $exibe[12] . "</b> do <b>" . $exibe[10] . 
+            "</b> <br>";
 
         } 
 
-    
-       /* echo "<hr>";
 
-        $query = mysqli_query($conexao, "SELECT Aluno_Nome, aluno_rg, aluno_cidade from aluno where aluno_codigo = 1;");
-        $exibe = mysqli_fetch_array($query);
-        echo "A aluna ". $exibe[0]. " portadorado do RM 1, RG ". $exibe[1]. " e residente na cidade de ". $exibe[2]. ", está cursando a disciplina de PW2 do TDS";
-       */ 
 
+
+        echo "<br><hr>";
+
+        $query = mysqli_query($conexao, "SELECT * FROM matricula 
+        INNER JOIN aluno 
+        ON Matricula_Aluno_Codigo = Aluno_Codigo 
+        INNER JOIN curso 
+        ON Matricula_Curso_Codigo = Curso_Codigo 
+        INNER JOIN disciplina 
+        ON Disciplina_Curso_Codigo = Curso_Codigo
+        GROUP BY Aluno_Codigo");
+        
+        while($exibe = mysqli_fetch_array($query)){
+
+           
+            $vogal = ($exibe[7]=="F")?"a":"o";
+            echo "<img src='imgs/".$exibe[8]."' width='150px'>";
+            echo strtoupper($vogal) . " alun$vogal <b>" . $exibe[4] . "</b>, portando o RM <b>" . $exibe[0] . "</b>, RG <b>" . $exibe[5] . 
+            "</b> e residente na cidade de <b>" . $exibe[6] . "</b> está cursando a disciplina de <b>" . $exibe[12] . "</b> do <b>" . $exibe[10] . 
+            "</b> <br>";
+
+
+            $query2 = mysqli_query($conexao, "SELECT disciplina.Disciplina_Nome FROM matricula
+            INNER JOIN aluno 
+            ON Matricula_Aluno_Codigo = Aluno_Codigo 
+            INNER JOIN curso 
+            ON Matricula_Curso_Codigo = Curso_Codigo 
+            INNER JOIN disciplina 
+            ON Disciplina_Curso_Codigo = Curso_Codigo
+            WHERE Aluno_Codigo = '$exibe[3]'
+            GROUP BY Disciplina_Codigo");
+
+            while($exibe2 = mysqli_fetch_array($query2)){
+                echo $exibe2[0]. "<br>";
+            }
+
+
+        } 
+
+    /*
+        echo "<br><hr>";
+
+        $query = mysqli_query($conexao, "SELECT * FROM matricula 
+        INNER JOIN aluno 
+        ON Matricula_Aluno_Codigo = Aluno_Codigo 
+        INNER JOIN curso 
+        ON Matricula_Curso_Codigo = Curso_Codigo 
+        INNER JOIN disciplina 
+        ON Disciplina_Curso_Codigo = Curso_Codigo
+        GROUP BY Disciplina_Codigo");
+        
+        while($exibe = mysqli_fetch_array($query)){
+
+            if($query = mysqli_query($conexao, "SELECT * FROM matricula where Matricula_Curso_Codigo = 1");){
+                while($exibe = mysqli_fetch_array($query)){
+                    echo "<img src='imgs/".$exibe[8]."' width='150px'>";
+
+                    $disciplina = ($exibe[12]=="ETIM-TDS")?"a":"o";
+                    $vogal = ($exibe[7]=="F")?"a":"o";
+                    echo strtoupper($vogal) . " alun$vogal <b>" . $exibe[4] . "</b>, portando o RM <b>" . $exibe[0] . "</b>, RG <b>" . $exibe[5] . 
+                    "</b> e residente na cidade de <b>" . $exibe[6] . "</b> está cursando as disciplinas de <b>" . $exibe[12] . "</b>, <b>" . $exibe[12] ."</b> e <b>" . $exibe[12]  "</b> do <b>" . $exibe[10] . 
+                    "</b> <br>";
+                    }
+            }
+
+            
+        } 
+*/
        echo "<hr>";
 
     ?>

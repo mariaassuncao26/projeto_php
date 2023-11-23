@@ -150,6 +150,14 @@
 */
        echo "<hr>";
 
+       $query = mysqli_query($conexao, "SELECT * FROM aluno where Aluno_Codigo = 6");
+
+       while($exibe = mysqli_fetch_array($query)){
+
+        echo "<img src='data:image/jpeg;base64,".$exibe[5]."'/>";
+    } 
+        
+
     ?>
 
 </body>
